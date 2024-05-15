@@ -1,12 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import HomeScreen from './components/HomeScreen'; // Import the HomeScreen component
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js tosfs startds working on your app!</Text>
-      <Text>Open up App.js tosfs startds working on your app!</Text>
-      <StatusBar style="auto" />
+      <HomeScreen />
+      
     </View>
   );
 }
@@ -17,5 +17,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    marginTop: 20, // Add margin to the top of the button
+    padding: 10, // Add padding around the button text
+    borderRadius: 5, // Add border radius to make the button rounded
+    borderWidth: 1, // Add border width to give the button a border
+    borderColor: '#841584', // Set the border color of the button
   },
 });
