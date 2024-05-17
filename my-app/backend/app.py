@@ -26,6 +26,22 @@ def get_requests():
     # Handle CORS errors
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
+
+@app.route('/addRequests', methods=['GET'])
+def get_requests():
+    # Establish connection to MySQL database
+    editor = DatabaseEditor()
+    rows = editor.getRequests()
+
+    # Convert rows to a list of strings
+    result = [str(row) for row in rows]
+
+    # Return JSON response containing the list of strings
+    response = jsonify({"data": result})
+
+    # Handle CORS errors
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
    
     
 

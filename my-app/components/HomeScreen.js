@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import RequestForm from './RequestForm';
 
 export default function HomeScreen() {
   const [data, setData] = useState([{}]);
@@ -26,6 +27,7 @@ export default function HomeScreen() {
         accessibilityLabel="Learn more about this purple button"
         style={styles.button}
       />
+      <RequestForm />
     </View>
   );
 }

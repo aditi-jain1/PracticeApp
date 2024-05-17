@@ -1,6 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import HomeScreen from './components/HomeScreen'; // Import the HomeScreen component
+import StartScreen from './components/StartScreen'; // Import the HomeScreen component
+import HomeScreen from './components/HomeScreen';
 
 export default function App() {
   return (
