@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
+  const [data, setData] = useState([{}]);
+
+  useEffect(() => {
+    fetch("/requests").then(
+        res => res.json()
+    ).then(
+        data => {
+            setData(data)
+            console.log("heloo")
+            console.log(data)
+        }
+    )
+  }, [])
+
   return (
     <View style={styles.container}>
       <Text>Welcome to My App!</Text>
       <Button
         title="Press Me"
-        onPress={() => {
-          // Action to perform when the button is pressed
-          alert('Button Pressedtf!');
-        }}
+        onPress={alert}
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
         style={styles.button}
