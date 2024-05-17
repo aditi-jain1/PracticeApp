@@ -5,7 +5,7 @@ export default function HomeScreen() {
   const [data, setData] = useState([{}]);
 
   useEffect(() => {
-    fetch("/requests").then(
+    fetch("http://192.168.86.197:5000/requests").then(
         res => res.json()
     ).then(
         data => {
@@ -18,9 +18,9 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome to My App!</Text>
+      <Text>Welcome to Myhfh App!</Text>
       <Button
-        title="Press Me"
+        title="Press hweMsfse"
         onPress={alert}
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
