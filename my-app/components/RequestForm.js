@@ -1,21 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Switch, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Switch, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function RequestForm() {
-    
-  
-  const [data, setData] = useState([{}]);
-  useEffect(() => {
-    fetch("http://192.168.86.197:5000/requests")
-      .then(res => res.json())
-      .then(data => {
-        setData(data);
-        console.log("hello");
-        console.log(data);
-      });
-  }, []);
-
   const [name, setName] = useState('Jane Doe');
   const [number, setNumber] = useState('0123456789');
   const [isChecked, setIsChecked] = useState(true);
@@ -36,6 +23,36 @@ export default function RequestForm() {
     setDate(currentDate);
   };
 
+  const handleSubmit = () => {
+    console.log(name);
+    console.log(number);
+    console.log(selectedOption);
+    console.log(date.toLocaleTimeString);
+    console.log(date.toDateString)
+    const requestData = {
+      name,
+      number,
+      isChecked,
+      location: selectedOption,
+      date: date.toISOString()
+    };
+
+    fetch('http://192.168.86.197:5000/addRequest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
   return (
     <View style={styles.formContainer}>
       <View style={styles.formGroup}>
@@ -46,7 +63,7 @@ export default function RequestForm() {
           onChangeText={setName}
         />
       </View>
-      <View style = {styles.formGroup}>
+      <View style={styles.formGroup}>
         <Text>Number:</Text>
         <TextInput
           style={styles.input}
@@ -54,7 +71,6 @@ export default function RequestForm() {
           onChangeText={setNumber}
         />
       </View>
-      
       <View style={styles.formGroup}>
         <Text>Checkbox:</Text>
         <Switch
@@ -66,13 +82,13 @@ export default function RequestForm() {
         <Text>Airport: </Text>
         <View style={styles.radioGroup}>
           <Text onPress={() => setSelectedOption('option1')}>
-            {selectedOption === 'option1' ? '◉' : '○'} OAK
+            {selectedOption === 'OAK' ? '◉' : '○'} OAK
           </Text>
           <Text onPress={() => setSelectedOption('option2')}>
-            {selectedOption === 'option2' ? '◉' : '○'} SFO
+            {selectedOption === 'SFO' ? '◉' : '○'} SFO
           </Text>
           <Text onPress={() => setSelectedOption('option3')}>
-            {selectedOption === 'option3' ? '◉' : '○'} SJC
+            {selectedOption === 'SJC' ? '◉' : '○'} SJC
           </Text>
         </View>
       </View>
@@ -104,6 +120,7 @@ export default function RequestForm() {
           />
         )}
       </View>
+      <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
 }
