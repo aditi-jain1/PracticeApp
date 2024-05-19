@@ -6,7 +6,7 @@ export default function RequestForm() {
   const [name, setName] = useState('Jane Doe');
   const [number, setNumber] = useState('0123456789');
   const [isChecked, setIsChecked] = useState(true);
-  const [selectedOption, setSelectedOption] = useState('option2');
+  const [selectedOption, setSelectedOption] = useState('OAK');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -81,17 +81,18 @@ export default function RequestForm() {
       <View style={styles.formGroup}>
         <Text>Airport: </Text>
         <View style={styles.radioGroup}>
-          <Text onPress={() => setSelectedOption('option1')}>
-            {selectedOption === 'OAK' ? '◉' : '○'} OAK
-          </Text>
-          <Text onPress={() => setSelectedOption('option2')}>
-            {selectedOption === 'SFO' ? '◉' : '○'} SFO
-          </Text>
-          <Text onPress={() => setSelectedOption('option3')}>
-            {selectedOption === 'SJC' ? '◉' : '○'} SJC
-          </Text>
+            <TouchableOpacity onPress={() => setSelectedOption('OAK')} style={styles.radioButton}>
+            <Text>{selectedOption === 'OAK' ? '◉' : '○'} OAK</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedOption('SFO')} style={styles.radioButton}>
+            <Text>{selectedOption === 'SFO' ? '◉' : '○'} SFO</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setSelectedOption('SJC')} style={styles.radioButton}>
+            <Text>{selectedOption === 'SJC' ? '◉' : '○'} SJC</Text>
+            </TouchableOpacity>
         </View>
-      </View>
+    </View>
+
       <View style={styles.formGroup}>
         <Text>Date: {date.toDateString()}</Text>
         <TouchableOpacity style={styles.button} onPress={() => setShowDatePicker(true)}>
