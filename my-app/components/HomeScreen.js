@@ -21,7 +21,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <Text>Welcome to Myhfh App!</Text>
       <Button
-        title="Press hweMsfse"
+        title="Press adityas"
         onPress={alert}
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
