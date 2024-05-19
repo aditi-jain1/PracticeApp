@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import RequestForm from './RequestForm';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) { // Note the added navigation prop
   const [data, setData] = useState([{}]);
 
   useEffect(() => {
-    fetch("http://192.168.86.197:5000/requests").then(
-        res => res.json()
-    ).then(
-        data => {
-            setData(data)
-            console.log("heloo")
-            console.log(data)
-        }
-    )
-  }, [])
+    fetch("http://192.168.86.197:5000/requests")
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+        console.log("hello");
+        console.log(data);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Welcome to Myhfh App!</Text>
+      <Text>Welcome to My App!</Text>
       <Button
-        title="Press adityas"
-        onPress={alert}
+        title="Press to go to Input Screen"
+        onPress={() => navigation.navigate('Input Screen')} // Use the navigation prop here
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
         style={styles.button}
       />
-      <RequestForm />
     </View>
   );
 }

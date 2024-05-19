@@ -1,14 +1,21 @@
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import StartScreen from './components/StartScreen'; // Import the HomeScreen component
+import InputScreen from './components/InputScreen'; // Import the HomeScreen component
 import HomeScreen from './components/HomeScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator(); // Define Stack here
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <HomeScreen />
-      
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName = "Home">
+        <Stack.Screen name = "Home" component = {HomeScreen} />
+        <Stack.Screen name = "Input Screen" component = {InputScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    
   );
 }
 
