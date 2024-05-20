@@ -79,6 +79,7 @@ export default function RequestForm() {
         <View style={styles.formGroup}>
           <GooglePlacesAutocomplete
             placeholder="Search for location"
+            keepResultsAfterBlur={true}
             query={{
               key: 'AIzaSyBS2Bw9K4A-B2i9NtfhPUxus6GBAySlw68',
               language: 'en',
@@ -86,9 +87,9 @@ export default function RequestForm() {
             disableScroll={true} 
             fetchDetails={true}
             onPress={(data, details = null) => {
-              console.log('YAY');
-              setLocation(details ? details.formatted_address : data.description);
-            }}
+                console.log(data, details);
+                setPlace(data.structured_formatting.main_text)
+             }}
             onFail={(error) => console.error(error)}
             textInputProps={{
               value: location,
