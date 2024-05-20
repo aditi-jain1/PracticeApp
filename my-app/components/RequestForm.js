@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TextInput, Switch, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -11,7 +11,9 @@ export default function RequestForm() {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const [location, setLocation] = useState('');
+  const [startLocation, setStartLocation] = useState('');
+  const [destination, setDestination] = useState('');
+  const googlePlacesRef = useRef();
 
   const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -77,8 +79,10 @@ export default function RequestForm() {
           />
         </View>
         <View style={styles.formGroup}>
+          <Text>Starting Location:</Text>
           <GooglePlacesAutocomplete
             placeholder="Search for location"
+            ref={googlePlacesRef}
             keepResultsAfterBlur={true}
             query={{
               key: 'AIzaSyBS2Bw9K4A-B2i9NtfhPUxus6GBAySlw68',
@@ -88,12 +92,50 @@ export default function RequestForm() {
             fetchDetails={true}
             onPress={(data, details = null) => {
                 console.log(data, details);
-                setPlace(data.structured_formatting.main_text)
+                setStartLocation(data.description);
+                googlePlacesRef.current.blur();
              }}
             onFail={(error) => console.error(error)}
             textInputProps={{
-              value: location,
-              onChangeText: (text) => setLocation(text),
+              value: startLocation,
+              onChangeText: (text) => setStartLocation(text),
+            }}
+            styles={{
+              textInputContainer: {
+                width: '100%',
+              },
+              textInput: {
+                height: 38,
+                color: '#5d5d5d',
+                fontSize: 16,
+              },
+              predefinedPlacesDescription: {
+                color: '#1faadb',
+              },
+            }}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Destination:</Text>
+          <GooglePlacesAutocomplete
+            placeholder="Search for location"
+            ref={googlePlacesRef}
+            keepResultsAfterBlur={true}
+            query={{
+              key: 'AIzaSyBS2Bw9K4A-B2i9NtfhPUxus6GBAySlw68',
+              language: 'en',
+            }}
+            disableScroll={true} 
+            fetchDetails={true}
+            onPress={(data, details = null) => {
+                console.log(data, details);
+                setDestination(data.description);
+                googlePlacesRef.current.blur();
+             }}
+            onFail={(error) => console.error(error)}
+            textInputProps={{
+              value: destination,
+              onChangeText: (text) => setDestination(text),
             }}
             styles={{
               textInputContainer: {
