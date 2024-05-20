@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Switch, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function RequestForm() {
   const [name, setName] = useState('Jane Doe');
   const [number, setNumber] = useState('0123456789');
   const [isChecked, setIsChecked] = useState(true);
-  const [selectedOption, setSelectedOption] = useState('OAK');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [location, setLocation] = useState('');
 
   const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -24,16 +26,11 @@ export default function RequestForm() {
   };
 
   const handleSubmit = () => {
-    console.log(name);
-    console.log(number);
-    console.log(selectedOption);
-    console.log(date.toLocaleTimeString);
-    console.log(date.toDateString)
     const requestData = {
       name,
       number,
       isChecked,
-      location: selectedOption,
+      location,
       date: date.toISOString()
     };
 
@@ -54,82 +51,106 @@ export default function RequestForm() {
   };
 
   return (
-    <View style={styles.formContainer}>
-      <View style={styles.formGroup}>
-        <Text>Name:</Text>
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={setName}
-        />
-      </View>
-      <View style={styles.formGroup}>
-        <Text>Number:</Text>
-        <TextInput
-          style={styles.input}
-          value={number}
-          onChangeText={setNumber}
-        />
-      </View>
-      <View style={styles.formGroup}>
-        <Text>Checkbox:</Text>
-        <Switch
-          value={isChecked}
-          onValueChange={setIsChecked}
-        />
-      </View>
-      <View style={styles.formGroup}>
-        <Text>Airport: </Text>
-        <View style={styles.radioGroup}>
-            <TouchableOpacity onPress={() => setSelectedOption('OAK')} style={styles.radioButton}>
-            <Text>{selectedOption === 'OAK' ? '◉' : '○'} OAK</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelectedOption('SFO')} style={styles.radioButton}>
-            <Text>{selectedOption === 'SFO' ? '◉' : '○'} SFO</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setSelectedOption('SJC')} style={styles.radioButton}>
-            <Text>{selectedOption === 'SJC' ? '◉' : '○'} SJC</Text>
-            </TouchableOpacity>
+    <KeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <View style={styles.formContainer}>
+        <View style={styles.formGroup}>
+          <Text>Name:</Text>
+          <TextInput
+            style={styles.input}
+            value={name}
+            onChangeText={setName}
+          />
         </View>
-    </View>
-
-      <View style={styles.formGroup}>
-        <Text>Date: {date.toDateString()}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => setShowDatePicker(true)}>
-          <Text style={styles.buttonText}>Choose Date</Text>
-        </TouchableOpacity>
-        {showDatePicker && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="default"
-            onChange={onChangeDate}
+        <View style={styles.formGroup}>
+          <Text>Number:</Text>
+          <TextInput
+            style={styles.input}
+            value={number}
+            onChangeText={setNumber}
           />
-        )}
-      </View>
-      <View style={styles.formGroup}>
-        <Text>Time: {date.toLocaleTimeString()}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => setShowTimePicker(true)}>
-          <Text style={styles.buttonText}>Choose Time</Text>
-        </TouchableOpacity>
-        {showTimePicker && (
-          <DateTimePicker
-            value={date}
-            mode="time"
-            display="default"
-            onChange={onChangeTime}
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Checkbox:</Text>
+          <Switch
+            value={isChecked}
+            onValueChange={setIsChecked}
           />
-        )}
+        </View>
+        <View style={styles.formGroup}>
+          <GooglePlacesAutocomplete
+            placeholder="Search for location"
+            query={{
+              key: 'AIzaSyBS2Bw9K4A-B2i9NtfhPUxus6GBAySlw68',
+              language: 'en',
+            }}
+            disableScroll={true} 
+            fetchDetails={true}
+            onPress={(data, details = null) => {
+              console.log('YAY');
+              setLocation(details ? details.formatted_address : data.description);
+            }}
+            onFail={(error) => console.error(error)}
+            textInputProps={{
+              value: location,
+              onChangeText: (text) => setLocation(text),
+            }}
+            styles={{
+              textInputContainer: {
+                width: '100%',
+              },
+              textInput: {
+                height: 38,
+                color: '#5d5d5d',
+                fontSize: 16,
+              },
+              predefinedPlacesDescription: {
+                color: '#1faadb',
+              },
+            }}
+          />
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Date: {date.toDateString()}</Text>
+          <TouchableOpacity style={styles.button} onPress={() => setShowDatePicker(true)}>
+            <Text style={styles.buttonText}>Choose Date</Text>
+          </TouchableOpacity>
+          {showDatePicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="default"
+              onChange={onChangeDate}
+            />
+          )}
+        </View>
+        <View style={styles.formGroup}>
+          <Text>Time: {date.toLocaleTimeString()}</Text>
+          <TouchableOpacity style={styles.button} onPress={() => setShowTimePicker(true)}>
+            <Text style={styles.buttonText}>Choose Time</Text>
+          </TouchableOpacity>
+          {showTimePicker && (
+            <DateTimePicker
+              value={date}
+              mode="time"
+              display="default"
+              onChange={onChangeTime}
+            />
+          )}
+        </View>
+        <Button title="Submit" onPress={handleSubmit} />
       </View>
-      <Button title="Submit" onPress={handleSubmit} />
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
   formContainer: {
-    marginTop: 20,
-    padding: 10,
+    flex: 1,
   },
   formGroup: {
     marginBottom: 20,
@@ -137,16 +158,12 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 5,
+    padding: 10,
     borderRadius: 5,
-  },
-  radioGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   button: {
     backgroundColor: '#007BFF',
-    padding: 5,
+    padding: 10,
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 5,
