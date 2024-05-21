@@ -1,5 +1,7 @@
 import math
 
+from time import Time
+
 import pymysql
 
 class MatchingAlgorithm():
@@ -76,6 +78,27 @@ class MatchingAlgorithm():
         long2 = self.cursor.fetchone()[0]
 
         return self.getDistance(lat1, long1, lat2, long2)
+    
+    def getTimeDifference(self, id1, id2):
+        sql = f"SELECT departureTime FROM requests WHERE id = {id1}"
+        self.cursor.execute(sql)
+        id1 = self.cursor.fetchone()[0]
+        time1 = Time(id1)
+
+        sql = f"SELECT departureTime FROM requests WHERE id = {id1}"
+        self.cursor.execute(sql)
+        id1 = self.cursor.fetchone()[0]
+        time2 = Time(id1)
+        monthDays = {1:, 2:, 3:, 4: 5: }
+
+        yearDiff = abs(time1.getYear() - time2.getYear())
+        monthDiff = abs(time1.getMonth() - time2.getMonth())
+        dayDiff = abs(time1.get)
+
+
+
+    
+
     
 
 
