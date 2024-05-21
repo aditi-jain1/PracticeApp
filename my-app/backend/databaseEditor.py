@@ -2,7 +2,7 @@ import pymysql
 
 
 
-class   DatabaseEditor:
+class DatabaseEditor:
     def __init__(self):
         self.connection = pymysql.connect(
             host='database-3.cv2w86es0oma.us-east-2.rds.amazonaws.com',
