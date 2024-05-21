@@ -11,9 +11,20 @@ export default function RequestForm() {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
+
   const [startLocation, setStartLocation] = useState('');
   const [destination, setDestination] = useState('');
-  const googlePlacesRef = useRef();
+
+  const [startDescription, setStartDescription] = useState('');
+  const [destinationDescription, setDestinationDescription] = useState('');
+
+  const [startLat, setStartLat] = useState('');
+  const [startLong, setStartLong] = useState('');
+  const [destinationLat, setDestinationLat] = useState('');
+  const [destinationLong, setDestinationLong] = useState('');
+
+  const startRef = useRef();
+  const destinationRef = useRef();
 
   const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -27,13 +38,18 @@ export default function RequestForm() {
     setDate(currentDate);
   };
 
+
   const handleSubmit = () => {
     const requestData = {
       name,
-      number,
-      isChecked,
-      location,
-      date: date.toISOString()
+      phoneNumber: number,
+      departureTime: date.toISOString(),
+      startingLocationDescription: startDescription,
+      startingLat: startLat,
+      startingLong: startLong,
+      destinationDescription,
+      destinationLat,
+      destinationLong
     };
 
     fetch('http://192.168.86.197:5000/addRequest', {
@@ -82,19 +98,22 @@ export default function RequestForm() {
           <Text>Starting Location:</Text>
           <GooglePlacesAutocomplete
             placeholder="Search for location"
-            ref={googlePlacesRef}
+            ref={startRef}
             keepResultsAfterBlur={true}
             query={{
               key: 'AIzaSyBS2Bw9K4A-B2i9NtfhPUxus6GBAySlw68',
               language: 'en',
             }}
-            disableScroll={true} 
+            disableScroll={true}
             fetchDetails={true}
             onPress={(data, details = null) => {
-                console.log(data, details);
-                setStartLocation(data.description);
-                googlePlacesRef.current.blur();
-             }}
+              console.log(data, details);
+              setStartLocation(data.description);
+              setStartLat(details.geometry.location.lat.toString());
+              setStartLong(details.geometry.location.lng.toString());
+              setStartDescription(data.description);
+              startRef.current?.blur();
+            }}
             onFail={(error) => console.error(error)}
             textInputProps={{
               value: startLocation,
@@ -119,19 +138,22 @@ export default function RequestForm() {
           <Text>Destination:</Text>
           <GooglePlacesAutocomplete
             placeholder="Search for location"
-            ref={googlePlacesRef}
+            ref={destinationRef}
             keepResultsAfterBlur={true}
             query={{
               key: 'AIzaSyBS2Bw9K4A-B2i9NtfhPUxus6GBAySlw68',
               language: 'en',
             }}
-            disableScroll={true} 
+            disableScroll={true}
             fetchDetails={true}
             onPress={(data, details = null) => {
-                console.log(data, details);
-                setDestination(data.description);
-                googlePlacesRef.current.blur();
-             }}
+              console.log(data, details);
+              setDestination(data.description);
+              setDestinationLat(details.geometry.location.lat.toString());
+              setDestinationLong(details.geometry.location.lng.toString());
+              setDestinationDescription(data.description);
+              destinationRef.current?.blur();
+            }}
             onFail={(error) => console.error(error)}
             textInputProps={{
               value: destination,

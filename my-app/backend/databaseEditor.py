@@ -1,5 +1,7 @@
 import pymysql
 
+
+
 class   DatabaseEditor:
     def __init__(self):
         self.connection = pymysql.connect(
@@ -10,9 +12,9 @@ class   DatabaseEditor:
         )
         self.cursor = self.connection.cursor()
 
-    def addRequest(self, name, phoneNumber, departureTime, departureLocation):
-        sql = '''insert into requests(name, phoneNumber, departureTime, departureLocation) values (%s, %s, %s, %s)'''
-        values = (name, phoneNumber, departureTime, departureLocation)
+    def addRequest(self, name, phoneNumber, affiliation, departureTime, startingLocationDescription, startingLat, startingLong, destinationDescription, destinationLat, destinationLong, groupNumber, resolved):
+        sql = '''insert into requests(name, phoneNumber, affiliation, departureTime, startingLocationDescription, startingLat, startingLong, destinationDescription, destinationLat, destinationLong, groupNumber, resolved) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+        values = (name, phoneNumber, affiliation, departureTime, startingLocationDescription, startingLat, startingLong, destinationDescription, destinationLat, destinationLong, groupNumber, resolved)
         self.cursor.execute(sql, values)
         self.connection.commit()
 

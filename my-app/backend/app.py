@@ -19,12 +19,21 @@ def get_requests():
 def add_request():
     data = request.get_json()
     name = data.get('name')
-    phoneNumber = data.get('number')
-    departureTime = data.get('date')
-    departureLocation = data.get('location')
+    phoneNumber = data.get('phoneNumber')
+    departureTime = data.get('departureTime')
+    affiliation = "Berkeley"
+    startingLocationDescription = data.get('startingLocationDescription')
+    startingLat = data.get('startingLat')
+    startingLong = data.get('startingLong')
+    destinationDescription = data.get('destinationDescription')
+    destinationLat = data.get('destinationLat')
+    destinationLong = data.get('destinationLong')
+    groupNumber = '-1'
+    resolved = 'F'
+
 
     editor = DatabaseEditor()
-    result = editor.addRequest(name, phoneNumber, departureTime, departureLocation)
+    result = editor.addRequest(name, phoneNumber, affiliation, departureTime, startingLocationDescription, startingLat, startingLong, destinationDescription, destinationLat, destinationLong, groupNumber, resolved)
 
     response = jsonify({"result": result})
     response.headers.add("Access-Control-Allow-Origin", "*")
