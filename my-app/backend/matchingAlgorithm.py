@@ -1,6 +1,6 @@
 import math
-
-from time import Time
+from dateutil.parser import parse
+from dateutil.relativedelta import relativedelta
 
 import pymysql
 
@@ -83,17 +83,23 @@ class MatchingAlgorithm():
         sql = f"SELECT departureTime FROM requests WHERE id = {id1}"
         self.cursor.execute(sql)
         id1 = self.cursor.fetchone()[0]
-        time1 = Time(id1)
+        time1 = parse(id1)
 
-        sql = f"SELECT departureTime FROM requests WHERE id = {id1}"
+        sql = f"SELECT departureTime FROM requests WHERE id = {id2}"
         self.cursor.execute(sql)
-        id1 = self.cursor.fetchone()[0]
-        time2 = Time(id1)
-        monthDays = {1:, 2:, 3:, 4: 5: }
+        id2 = self.cursor.fetchone()[0]
+        time2 = parse(id2)
 
-        yearDiff = abs(time1.getYear() - time2.getYear())
-        monthDiff = abs(time1.getMonth() - time2.getMonth())
-        dayDiff = abs(time1.get)
+        delta = relativedelta(time1, time2)
+        print(delta)
+        
+        return delta
+    
+    def timeDifferenceWithinBounds(self, hourBoundary, id1, id2):
+        if self.getTimeDifference(id1, id2).days == 0 and abs(self.getTimeDifference(id1, id2).hours) <= hourBoundary:
+            return True
+        return False
+
 
 
 
