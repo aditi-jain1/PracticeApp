@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { useFonts, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import LottieView from 'lottie-react-native';
 
 export default function HomeScreen({ navigation }) {
   const [data, setData] = useState([{}]);
+  const [fontsLoaded] = useFonts({
+    Quicksand_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
+
   /*
   useEffect(() => {
     fetch("http://192.168.86.197:5000/requests")
@@ -15,6 +24,7 @@ export default function HomeScreen({ navigation }) {
       });
   }, []);
   */
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -22,13 +32,12 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.description}>
           Carpooling made easy for students! Use Voyage to find ride buddies, cut travel costs, and enjoy a greener commute to your destinations.
         </Text>
-        <Button
-          title="Get Started!"
-          onPress={() => navigation.navigate('Input Screen')}
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
+        <TouchableOpacity
           style={styles.button}
-        />
+          onPress={() => navigation.navigate('Input Screen')}
+        >
+          <Text style={styles.buttonText}>Get Started!</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.animationContainer}>
         <LottieView
@@ -44,15 +53,12 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EBF5FB',
     alignItems: 'center',
     justifyContent: 'center',
-
   },
   content: {
     flex: 1,
@@ -61,24 +67,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 42,
+    fontSize: 72, // Increased font size
     fontWeight: 'bold',
-    color: '#F1BE71',
+    color: '#7994C7',
     marginBottom: 20,
+    fontFamily: 'Quicksand_700Bold',
   },
   description: {
     fontSize: 16,
     color: '#333',
     textAlign: 'left',
     marginBottom: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
+    
   },
   button: {
+    backgroundColor: '#F5C674', 
     marginTop: 20,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 30,
     borderWidth: 1,
-    borderColor: '#841584',
+    borderColor: '#F5C674', // Black border color
+    alignItems: 'center',
+    // Shadow properties
+    shadowColor: '#99AACB',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+    elevation: 5, // For Android
+  },
+  buttonText: {
+    color: '#24354B', // White text color
+    fontSize: 20,
+    padding: 10,
   },
   animationContainer: {
     width: '100%',
@@ -89,6 +110,5 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     width: '100%',
     height: 400,
-
   },
 });
