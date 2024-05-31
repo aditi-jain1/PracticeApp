@@ -6,14 +6,17 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+
 @app.route('/requests', methods=['GET'])
 def get_requests():
     editor = DatabaseEditor()
     rows = editor.getRequests()
-    result = [str(row) for row in rows]
+    # Convert rows to a list of dictionaries
+    result = [{"id": row[0],"name": row[1], "phoneNumber": row[2]} for row in rows]
     response = jsonify({"data": result})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
+
 
 @app.route('/addRequest', methods=['POST'])
 def add_request():
