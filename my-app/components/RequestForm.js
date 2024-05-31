@@ -86,13 +86,7 @@ export default function RequestForm() {
             onChangeText={setNumber}
           />
         </View>
-        <View style={styles.formGroup}>
-          <Text>Checkbox:</Text>
-          <Switch
-            value={isChecked}
-            onValueChange={setIsChecked}
-          />
-        </View>
+
         <View style={styles.formGroup}>
           <Text>Starting Location:</Text>
           <GooglePlacesAutocomplete
