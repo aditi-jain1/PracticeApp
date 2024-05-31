@@ -38,7 +38,6 @@ export default function RequestForm() {
     setDate(currentDate);
   };
 
-
   const handleSubmit = () => {
     const requestData = {
       name,
@@ -112,7 +111,7 @@ export default function RequestForm() {
               setStartLat(details.geometry.location.lat.toString());
               setStartLong(details.geometry.location.lng.toString());
               setStartDescription(data.description);
-              startRef.current?.blur();
+              startRef.current.blur();
             }}
             onFail={(error) => console.error(error)}
             textInputProps={{
@@ -152,7 +151,7 @@ export default function RequestForm() {
               setDestinationLat(details.geometry.location.lat.toString());
               setDestinationLong(details.geometry.location.lng.toString());
               setDestinationDescription(data.description);
-              destinationRef.current?.blur();
+              destinationRef.current.blur();
             }}
             onFail={(error) => console.error(error)}
             textInputProps={{
@@ -216,9 +215,13 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
+    width: '100%', // Ensure the form container takes up the full width
+    paddingTop: 30,
   },
   formGroup: {
     marginBottom: 20,
+    width: '100%', // Set the width of each form group to 50% of the screen width
+    alignSelf: 'center', // Center the form groups horizontally
   },
   input: {
     borderWidth: 1,
@@ -227,11 +230,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#F5C674',
+    marginTop: 20,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: '#F5C674',
     alignItems: 'center',
-    marginTop: 5,
+    // Shadow properties
+    shadowColor: '#99AACB',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
+    elevation: 5, // For Android
   },
   buttonText: {
     color: 'white',

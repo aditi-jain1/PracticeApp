@@ -34,11 +34,12 @@ export default function HomeScreen({ navigation }) {
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Input Screen')}
+          onPress={() => navigation.navigate('Profile')}
         >
           <Text style={styles.buttonText}>Get Started!</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.animationContainer}>
         <LottieView
           source={require('./homeAnimation.json')}
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // Shadow properties
     shadowColor: '#99AACB',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
     elevation: 5, // For Android

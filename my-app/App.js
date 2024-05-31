@@ -1,21 +1,36 @@
 import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import InputScreen from './components/InputScreen'; // Import the HomeScreen component
+import InputScreen from './components/InputScreen';
 import HomeScreen from './components/HomeScreen';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator(); // Define Stack here
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName = "Home">
-        <Stack.Screen name = "Home" component = {HomeScreen} options={{headerShown:false}}/>
-        <Stack.Screen name = "Input Screen" component = {InputScreen} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="Profile" 
+          component={InputScreen} 
+          options={{
+            headerStyle: {
+              backgroundColor: '#EBF5FB', // Set the background color of the navigation bar
+            },
+            headerTintColor: '#7994C7', // Set the text color of the navigation bar
+            headerTitleStyle: {
+              fontWeight: 'bold', // Optionally make the title bold
+            },
+          }} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
-    
   );
 }
 
