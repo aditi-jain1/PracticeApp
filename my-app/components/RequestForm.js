@@ -209,13 +209,13 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    width: '100%', // Ensure the form container takes up the full width
+    width: '100%',
     paddingTop: 30,
   },
   formGroup: {
     marginBottom: 20,
-    width: '100%', // Set the width of each form group to 50% of the screen width
-    alignSelf: 'center', // Center the form groups horizontally
+    width: '100%', 
+    alignSelf: 'center', 
   },
   input: {
     borderWidth: 1,
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
-    elevation: 5, // For Android
+    elevation: 5, 
   },
   buttonText: {
     color: 'white',

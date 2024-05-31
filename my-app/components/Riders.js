@@ -44,7 +44,7 @@ export default function Riders() {
       >
         <Text style={styles.cardTitle}>{user.name}</Text>
         <Text style={styles.cardDetails}>Phone Number: {user.phoneNumber}</Text>
-        {/* Add more user details as needed */}
+
       </TouchableOpacity>
     );
   };
