@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import InputScreen from './components/InputScreen';
 import HomeScreen from './components/HomeScreen';
+import Riders from './components/Riders';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -28,6 +29,10 @@ export default function App() {
               fontWeight: 'bold', // Optionally make the title bold
             },
           }} 
+        />
+        <Stack.Screen
+          name="Riders"
+          component={Riders}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -38,6 +38,12 @@ export default function HomeScreen({ navigation }) {
         >
           <Text style={styles.buttonText}>Get Started!</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Riders')}
+        >
+          <Text style={styles.buttonText}>Cards</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.animationContainer}>
