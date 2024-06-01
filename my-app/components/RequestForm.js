@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TextInput, Switch, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import LottieView from 'lottie-react-native';
 
 export default function RequestForm() {
   const [name, setName] = useState('Jane Doe');
   const [number, setNumber] = useState('0123456789');
-  const [isChecked, setIsChecked] = useState(true);
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
@@ -44,11 +44,11 @@ export default function RequestForm() {
       phoneNumber: number,
       departureTime: date.toISOString(),
       startingLocationDescription: startDescription,
-      startingLat: startLat,
-      startingLong: startLong,
+      startingLat,
+      startingLong,
       destinationDescription,
       destinationLat,
-      destinationLong
+      destinationLong,
     };
 
     fetch('http://192.168.86.197:5000/addRequest', {
@@ -58,8 +58,8 @@ export default function RequestForm() {
       },
       body: JSON.stringify(requestData),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log('Success:', data);
       })
       .catch((error) => {
@@ -69,22 +69,20 @@ export default function RequestForm() {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <LottieView
+        source={require('./profileAnimatio.json')}
+        autoPlay
+        loop
+        style={styles.lottie}
+      />
       <View style={styles.formContainer}>
         <View style={styles.formGroup}>
           <Text>Name:</Text>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={setName}
-          />
+          <TextInput style={styles.input} value={name} onChangeText={setName} />
         </View>
         <View style={styles.formGroup}>
           <Text>Number:</Text>
-          <TextInput
-            style={styles.input}
-            value={number}
-            onChangeText={setNumber}
-          />
+          <TextInput style={styles.input} value={number} onChangeText={setNumber} />
         </View>
 
         <View style={styles.formGroup}>
@@ -173,12 +171,7 @@ export default function RequestForm() {
             <Text style={styles.buttonText}>Choose Date</Text>
           </TouchableOpacity>
           {showDatePicker && (
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="default"
-              onChange={onChangeDate}
-            />
+            <DateTimePicker value={date} mode="date" display="default" onChange={onChangeDate} />
           )}
         </View>
         <View style={styles.formGroup}>
@@ -187,12 +180,7 @@ export default function RequestForm() {
             <Text style={styles.buttonText}>Choose Time</Text>
           </TouchableOpacity>
           {showTimePicker && (
-            <DateTimePicker
-              value={date}
-              mode="time"
-              display="default"
-              onChange={onChangeTime}
-            />
+            <DateTimePicker value={date} mode="time" display="default" onChange={onChangeTime} />
           )}
         </View>
         <Button title="Submit" onPress={handleSubmit} />
@@ -214,8 +202,8 @@ const styles = StyleSheet.create({
   },
   formGroup: {
     marginBottom: 20,
-    width: '100%', 
-    alignSelf: 'center', 
+    width: '100%',
+    alignSelf: 'center',
   },
   input: {
     borderWidth: 1,
@@ -236,10 +224,15 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
-    elevation: 5, 
+    elevation: 5,
   },
   buttonText: {
     color: 'white',
     fontSize: 14,
+  },
+  lottie: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
   },
 });
